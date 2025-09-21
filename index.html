@@ -68,15 +68,21 @@ const levels = [
     goal: {x:580,y:120,w:20,h:40}
   },
   {
-    platforms: [
-      {x:0,y:340,w:640,h:20},{x:100,y:300,w:80,h:20},{x:300,y:250,w:80,h:20},{x:500,y:180,w:100,h:20}
-    ],
-    coins: [
-      {x:120,y:270,size:10,collected:false},{x:320,y:220,size:10,collected:false},{x:520,y:150,size:10,collected:false}
-    ],
-    enemies: [], // no enemies
-    goal: {x:580,y:140,w:20,h:40}
-  },
+  platforms: [
+    {x:0,y:340,w:640,h:20},   // ground
+    {x:100,y:300,w:80,h:20},  // left platform
+    {x:300,y:250,w:160,h:20}, // middle platform (made longer)
+    {x:500,y:180,w:100,h:20}  // right platform
+  ],
+  coins: [
+    {x:120,y:270,size:10,collected:false},
+    {x:320,y:220,size:10,collected:false},
+    {x:520,y:150,size:10,collected:false}
+  ],
+  enemies: [], // no enemies
+  goal: {x:580,y:140,w:20,h:40}
+}
+
   {
     platforms: [
       {x:0,y:340,w:640,h:20},{x:80,y:300,w:80,h:20},{x:200,y:250,w:80,h:20},{x:400,y:200,w:100,h:20}
