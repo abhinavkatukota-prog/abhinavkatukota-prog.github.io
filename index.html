@@ -53,7 +53,7 @@ let gameOver = false;
 let gameWin = false;
 
 // ============================
-// LEVELS
+// LEVELS (NO ENEMIES)
 // ============================
 let currentLevel = 0;
 const levels = [
@@ -64,10 +64,7 @@ const levels = [
     coins: [
       {x:150,y:250,size:10,collected:false},{x:310,y:190,size:10,collected:false},{x:470,y:130,size:10,collected:false}
     ],
-    enemies: [
-      // Removed the first enemy
-      {x:400,y:140,w:20,h:20,dir:-1,range:[400,500]}
-    ],
+    enemies: [], // no enemies
     goal: {x:580,y:120,w:20,h:40}
   },
   {
@@ -77,9 +74,7 @@ const levels = [
     coins: [
       {x:120,y:270,size:10,collected:false},{x:320,y:220,size:10,collected:false},{x:520,y:150,size:10,collected:false}
     ],
-    enemies: [
-      {x:150,y:320,w:20,h:20,dir:1,range:[150,250]},{x:450,y:160,w:20,h:20,dir:-1,range:[450,550]}
-    ],
+    enemies: [], // no enemies
     goal: {x:580,y:140,w:20,h:40}
   },
   {
@@ -89,18 +84,21 @@ const levels = [
     coins: [
       {x:100,y:270,size:10,collected:false},{x:220,y:220,size:10,collected:false},{x:420,y:170,size:10,collected:false}
     ],
-    enemies: [
-      {x:180,y:320,w:20,h:20,dir:1,range:[180,260]},{x:380,y:180,w:20,h:20,dir:-1,range:[380,480]}
-    ],
+    enemies: [], // no enemies
     goal: {x:600,y:160,w:20,h:40}
   }
 ];
+
 let platforms = [];
+let coins = [];
+let enemies = [];
+let goal = {};
+
 function loadLevel(n){
   const lvl = levels[n];
   platforms = JSON.parse(JSON.stringify(lvl.platforms));
   coins = JSON.parse(JSON.stringify(lvl.coins));
-  enemies = JSON.parse(JSON.stringify(lvl.enemies));
+  enemies = []; // always empty
   goal = JSON.parse(JSON.stringify(lvl.goal));
   resetPlayer();
 }
@@ -173,20 +171,6 @@ function update() {
     }
   }
 
-  // Enemies
-  for(let e of enemies){
-    e.x += e.dir * 1.5;
-    if(e.x < e.range[0] || e.x > e.range[1]) e.dir *= -1;
-
-    if(player.x < e.x + e.w && player.x + player.width > e.x &&
-       player.y < e.y + e.h && player.y + player.height > e.y){
-      player.lives -= 1;
-      playBeep(120,200);
-      resetPlayer();
-      if(player.lives <= 0) gameOver = true;
-    }
-  }
-
   // Goal
   if(player.x < goal.x + goal.w && player.x + player.width > goal.x &&
      player.y < goal.y + goal.h && player.y + player.height > goal.y){
@@ -244,9 +228,7 @@ function draw() {
     ctx.fill();
   }
 
-  // Enemies
-  ctx.fillStyle = "#2222ff";
-  for(let e of enemies) ctx.fillRect(e.x,e.y,e.w,e.h);
+  // No enemies — skipped drawing
 
   // Goal
   ctx.fillStyle = "#000";
